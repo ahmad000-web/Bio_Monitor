@@ -1,0 +1,46 @@
+name: bio_monitor
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ffi : ^2.1.0
+
+  cupertino_icons: ^1.0.8
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  shared_preferences: ^2.2.2
+  youtube_player_flutter: 9.1.3
+  #flutter_inappwebview: ^5.8.0
+  get: ^4.6.5
+  image_picker: ^0.8.7+5
+  flutter_inappwebview: ^6.0.3
+
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Momosignature
+      fonts:
+        - asset: assets/fonts/Momo_Signature/MomoSignature-Regular.ttf
+
+    - family: FontPlay
+      fonts:
+        - asset: assets/fonts/Playwrite_HU/PlaywriteHU-VariableFont_wght.ttf
