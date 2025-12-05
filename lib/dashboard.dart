@@ -1,5 +1,9 @@
-import 'dart:io';
 
+import 'dart:io';
+import 'appointment.dart';
+import 'package:bio_monitor/appointment.dart';
+import 'history_checkup.dart';
+import 'regular_checkup.dart';
 import 'package:bio_monitor/articles/article_dengue.dart';
 import 'package:bio_monitor/articles/article_fever.dart';
 import 'package:bio_monitor/articles/article_hepatitis.dart';
@@ -12,8 +16,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'db/database_helper.dart';
 
 import 'user_database.dart';
+// Ideal ranges for a healthy adult
+
 
 class DashboardPage extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -63,7 +70,7 @@ class _DashboardPageState extends State<DashboardPage> {
         userData = updatedUser;
       });
     } else {
-      // Fetch latest data from database
+      // Fetch latest data from db
       final latestUser =
           await UserDatabase.instance.getUserByEmail(userData['email']);
       if (latestUser != null) {
@@ -151,7 +158,6 @@ class _DashboardPageState extends State<DashboardPage> {
                 onTap: () async {
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.clear();
-
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => GetStarted()),
@@ -221,33 +227,28 @@ class _DashboardPageState extends State<DashboardPage> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 15),
-            actionTile("Regular Check"),
-            actionTile("Book Appointment"),
-            actionTileWithPage("Check BMI", BMI()),
-            actionTile("History of Checkup"),
-            actionTileWithPage("Yoga", YogaExercisePage()),
+            actionTile("Regular Check", page: const RegularCheckupScreen()),
+            actionTile("Book Appointment", page: AppointmentScreen(userData: userData)), // leave empty for now
+            actionTile("Check BMI", page: const BMI()),
+            actionTile("History of Checkup",page: const HistoryPage()), // leave empty for now
+            actionTile("Yoga", page: YogaExercisePage()),
           ],
         ),
       ),
     );
   }
-
-  Widget actionTile(String title) {
-    return Card(
-      child: ListTile(
-        title: Text(title),
-        trailing: Icon(Icons.arrow_forward_ios),
-      ),
-    );
-  }
-
-  Widget actionTileWithPage(String title, Widget page) {
+  Widget actionTile(String title, {Widget? page}) {
     return Card(
       child: ListTile(
         title: Text(title),
         trailing: Icon(Icons.arrow_forward_ios),
         onTap: () {
-          Get.to(() => page);
+          if (page != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => page),
+            );
+          }
         },
       ),
     );
