@@ -1,3 +1,4 @@
+
 allprojects {
     repositories {
         google()
@@ -10,6 +11,8 @@ val newBuildDir: Directory =
         .dir("../../build")
         .get()
 rootProject.layout.buildDirectory.value(newBuildDir)
+
+
 
 subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
