@@ -16,7 +16,7 @@ class _BMIState extends State<BMI> {
   Color bgColor = Colors.white;
   String resultMessage = "";
 
-  // Dart version of BMI calculation
+  // BMI Calculation
   double calculateBMI(double weightKg, double heightCm) {
     final heightM = heightCm / 100;
     if (heightM <= 0) return 0;
@@ -30,6 +30,7 @@ class _BMIState extends State<BMI> {
     return 3; // Extreme Overweight
   }
 
+  // MAIN FUNCTION with DIALOG
   void calculateBMIAndUpdateUI() {
     final double w = double.tryParse(weight.text) ?? 0;
     final int f = int.tryParse(feet.text) ?? 0;
@@ -38,10 +39,19 @@ class _BMIState extends State<BMI> {
     final double heightCm = (f * 12 + i) * 2.54;
 
     if (w <= 0 || heightCm <= 0) {
-      setState(() {
-        resultMessage = "Please enter valid weight and height.";
-        bgColor = Colors.white;
-      });
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Invalid Input"),
+          content: const Text("Please enter valid weight and height."),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
       return;
     }
 
@@ -73,10 +83,27 @@ class _BMIState extends State<BMI> {
         color = Colors.white;
     }
 
+    final String feedback = "BMI: ${bmi.toStringAsFixed(1)}\nStatus: $message";
+
     setState(() {
-      resultMessage = "BMI: ${bmi.toStringAsFixed(1)}\n$message";
+      resultMessage = feedback;
       bgColor = color;
     });
+
+    // SHOW RESULT DIALOG
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("BMI Result"),
+        content: Text(feedback),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -93,7 +120,7 @@ class _BMIState extends State<BMI> {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        title: Text("BMI Calculator"),
+        title: const Text("BMI Calculator"),
         backgroundColor: Colors.teal.shade900,
       ),
       body: Center(
@@ -103,7 +130,7 @@ class _BMIState extends State<BMI> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               Row(
                 children: [
                   Expanded(
@@ -114,11 +141,12 @@ class _BMIState extends State<BMI> {
                         labelText: "Age",
                         hintText: "Enter your age",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(11)),
+                          borderRadius: BorderRadius.circular(11),
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                   Expanded(
                     child: TextField(
                       keyboardType: TextInputType.number,
@@ -127,13 +155,14 @@ class _BMIState extends State<BMI> {
                         labelText: "Weight (kg)",
                         hintText: "Enter your weight",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(11)),
+                          borderRadius: BorderRadius.circular(11),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Row(
                 children: [
                   Expanded(
@@ -144,11 +173,12 @@ class _BMIState extends State<BMI> {
                         labelText: "Feet",
                         hintText: "Height (feet)",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(11)),
+                          borderRadius: BorderRadius.circular(11),
+                        ),
                       ),
                     ),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                   Expanded(
                     child: TextField(
                       keyboardType: TextInputType.number,
@@ -157,37 +187,40 @@ class _BMIState extends State<BMI> {
                         labelText: "Inches",
                         hintText: "Height (inches)",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(11)),
+                          borderRadius: BorderRadius.circular(11),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: calculateBMIAndUpdateUI,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal.shade900,
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                   elevation: 5,
                 ),
-                child: Text(
+                child: const Text(
                   "Check BMI",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Text(
                 resultMessage,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
             ],
           ),

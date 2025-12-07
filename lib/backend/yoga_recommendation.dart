@@ -7,6 +7,6 @@ class YogaRecommendation extends RecommendationService {
   }
 
   String getYogaLinks() {
-    return "https://youtube/yoga_beginner_video";
+    return "https://youtu.be/B4kNiCWTl7M?si=YTR6-vNylfleMlRq";
   }
 }

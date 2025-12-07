@@ -37,7 +37,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       "email": "dr.ahmed@example.com",
       "specialization": "Endocrinologist"
     },
-    "Dr. Noor Pulmonologist": {
+    "Dr. Noor (Pulmonologist)": {
       "email": "dr.noor@example.com",
       "specialization": "Pulmonologist"
     },

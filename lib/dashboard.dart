@@ -1,9 +1,5 @@
-
 import 'dart:io';
-import 'appointment.dart';
-import 'package:bio_monitor/appointment.dart';
-import 'history_checkup.dart';
-import 'regular_checkup.dart';
+
 import 'package:bio_monitor/articles/article_dengue.dart';
 import 'package:bio_monitor/articles/article_fever.dart';
 import 'package:bio_monitor/articles/article_hepatitis.dart';
@@ -14,13 +10,13 @@ import 'package:bio_monitor/getstarted.dart';
 import 'package:bio_monitor/yogaexercise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'db/database_helper.dart';
 
+import 'appointment.dart';
+import 'history_checkup.dart';
+import 'regular_checkup.dart';
 import 'user_database.dart';
 // Ideal ranges for a healthy adult
-
 
 class DashboardPage extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -172,7 +168,7 @@ class _DashboardPageState extends State<DashboardPage> {
           padding: EdgeInsets.all(16),
           children: [
             Text(
-              "Seasonal Disease Awareness",
+              "Disease Awareness",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 12),
@@ -228,15 +224,19 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
             SizedBox(height: 15),
             actionTile("Regular Check", page: const RegularCheckupScreen()),
-            actionTile("Book Appointment", page: AppointmentScreen(userData: userData)), // leave empty for now
+            actionTile("Book Appointment",
+                page: AppointmentScreen(
+                    userData: userData)), // leave empty for now
             actionTile("Check BMI", page: const BMI()),
-            actionTile("History of Checkup",page: const HistoryPage()), // leave empty for now
+            actionTile("History of Checkup",
+                page: const HistoryPage()), // leave empty for now
             actionTile("Yoga", page: YogaExercisePage()),
           ],
         ),
       ),
     );
   }
+
   Widget actionTile(String title, {Widget? page}) {
     return Card(
       child: ListTile(

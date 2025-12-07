@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:bio_monitor/db/database_helper.dart';
+import 'package:flutter/material.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -39,28 +39,31 @@ class _HistoryPageState extends State<HistoryPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const Text("Checkup History", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const Text("Checkup History",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
-
           ...checkups.map((item) => Card(
-            elevation: 3,
-            child: ListTile(
-              title: Text("${item['date']} — ${item['time']}"),
-              subtitle: Text(item['result']),
-            ),
-          )),
-
+                elevation: 3,
+                child: ListTile(
+                  title: Text("${item['date']} — ${item['time']}"),
+                  subtitle: Text(item['result']),
+                ),
+              )),
           const SizedBox(height: 20),
-          const Text("Appointment History", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const Text("Appointment History",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
-
           ...appointments.map((item) => Card(
-            elevation: 3,
-            child: ListTile(
-              title: Text("${item['doctor']} (${item['specialization']})"),
-              subtitle: Text("Date: ${item['date']} | Time: ${item['time']}"),
-            ),
-          )),
+                elevation: 3,
+                child: ListTile(
+                  title: Text("${item['doctor']} (${item['specialization']})"),
+                  subtitle:
+                      Text("Date: ${item['date']} | Time: ${item['time']}"),
+                ),
+              )),
+          SizedBox(
+            height: 50,
+          )
         ],
       ),
     );

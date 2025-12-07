@@ -54,9 +54,13 @@ class ArticleFever extends StatelessWidget {
           ),
           SizedBox(height: 20),
           Text(
-            "💛 Remember: Seasonal fevers are often preventable with proper care and awareness. Stay safe and healthy!",
+            "💛 Remember: Seasonal fevers are often preventable with proper care and awareness."
+            "Stay safe and healthy!",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
+          SizedBox(
+            height: 50,
+          )
         ],
       ),
     );

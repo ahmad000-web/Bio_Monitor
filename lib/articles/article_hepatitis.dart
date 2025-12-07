@@ -57,6 +57,9 @@ class ArticleHepatitis extends StatelessWidget {
             "💛 Remember: Awareness and vaccination are key to preventing hepatitis. Protect your liver, protect your life!",
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
+          SizedBox(
+            height: 50,
+          )
         ],
       ),
     );
