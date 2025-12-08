@@ -181,38 +181,31 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
     bool unsafe = feedback.contains("⚠️");
 
     // Send email if unsafe
+    // Check if health is unsafe
     if (unsafe) {
-      final prefs = await SharedPreferences.getInstance();
-      String? accessToken = prefs.getString('accessToken');
-      String? googleEmail = prefs.getString('googleEmail');
+      // Force user to sign in with Google to get fresh token
+      final account = await signInWithGoogle();
+      if (account != null) {
+        final auth = await account.authentication; // fresh token
+        final accessToken = auth.accessToken;
+        final email = account.email;
 
-      // Prompt Google Sign-In if no token
-      if (accessToken == null || googleEmail == null) {
-        final account = await signInWithGoogle();
-        if (account != null) {
-          final tokens = await getGoogleTokens(account);
-          if (tokens != null) {
-            accessToken = tokens['accessToken'];
-            googleEmail = tokens['email'];
-            await prefs.setString('accessToken', accessToken ?? '');
-            await prefs.setString('googleEmail', googleEmail ?? '');
-
-          }
+        if (accessToken != null) {
+          await sendMishapEmailWithGmailAPI(
+            accessToken,
+            email,
+            "doctor@example.com", // replace with doctor email
+            feedback,
+          );
+          print("Email sent successfully to doctor.");
+        } else {
+          print("Failed to get Google access token.");
         }
-      }
-
-      if (accessToken != null && googleEmail != null) {
-        await sendMishapEmailWithGmailAPI(
-          accessToken, // now guaranteed non-null
-          googleEmail,
-          "doctor@example.com",
-          feedback,
-        );
       } else {
-        print("Cannot send email: Google sign-in required.");
+        print("User did not sign in with Google.");
       }
-
     }
+
 
     // Save checkup to database
     await DatabaseHelper().insertCheckup({
