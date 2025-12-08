@@ -17,10 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
   bool _isHidden = true;
 
-  // Login with email/password
   Future<void> loginUser() async {
     setState(() => isLoading = true);
-
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
 
@@ -39,7 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', true);
       await prefs.setString('loggedUserEmail', user['email'] ?? "");
-
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => DashboardPage(userData: user)),
@@ -51,7 +48,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // Login with Google
   Future<void> loginWithGoogle() async {
     final account = await signInWithGoogle();
     if (account != null) {
@@ -59,13 +55,10 @@ class _LoginScreenState extends State<LoginScreen> {
       if (tokens != null) {
         final email = tokens['email'] ?? "";
         final displayName = tokens['displayName'] ?? "Unknown";
-
-        // Save session
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', true);
         await prefs.setString('loggedUserEmail', email);
 
-        // Save user to database if not exists
         final userData = {
           'name': displayName,
           'email': email,
@@ -77,9 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         };
         try {
           await UserDatabase.instance.insertUser(userData);
-        } catch (e) {
-          // Ignore if already exists
-        }
+        } catch (_) {}
 
         Navigator.pushReplacement(
           context,
