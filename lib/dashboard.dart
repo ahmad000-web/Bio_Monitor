@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:bio_monitor/services/google_sign_in_service.dart';
 import 'package:bio_monitor/articles/article_dengue.dart';
 import 'package:bio_monitor/articles/article_fever.dart';
 import 'package:bio_monitor/articles/article_hepatitis.dart';
@@ -166,7 +166,32 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         body: ListView(
           padding: EdgeInsets.all(16),
-          children: [
+          children: [// --- GOOGLE SIGN-IN BUTTON ---
+            ElevatedButton.icon(
+              icon: Icon(Icons.login),
+              label: Text("Sign in with Google"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal.shade700,
+                minimumSize: Size(double.infinity, 50),
+              ),
+              onPressed: () async {
+                final account = await signInWithGoogle();
+                if (account != null) {
+                  final tokens = await getGoogleTokens(account);
+                  if (tokens != null) {
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setString('googleEmail', tokens['email'] ?? '');
+                    await prefs.setString('accessToken', tokens['accessToken'] ?? '');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Signed in as ${tokens['email']}")),
+                    );
+                  }
+                }
+              },
+            ),
+
+            SizedBox(height: 20),
+
             Text(
               "Disease Awareness",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
