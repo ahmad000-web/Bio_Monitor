@@ -5,7 +5,10 @@ class ArticleDengue extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dengue Awareness"),
+        title: Text(
+          "Dengue Awareness",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.red.shade700,
       ),
       body: ListView(

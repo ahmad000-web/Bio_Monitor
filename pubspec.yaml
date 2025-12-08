@@ -6,7 +6,6 @@ version: 1.0.0+1
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-
 dependencies:
   google_sign_in: ^6.1.0  # or latest
   http: ^0.13.0
@@ -27,11 +26,6 @@ dependencies:
 
   connectivity_plus: ^5.0.2
   flutter_email_sender: ^6.0.0
-
-
-
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
