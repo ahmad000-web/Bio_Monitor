@@ -1,5 +1,3 @@
-// File: lib/screens/regular_checkup_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../db/database_helper.dart';
@@ -19,7 +17,6 @@ const double IDEAL_SUGAR_MIN = 70;
 const double IDEAL_SUGAR_MAX = 140;
 const double TOLERANCE = 5;
 
-// Evaluate health
 String evaluateHealth({
   required double systolic,
   required double diastolic,
@@ -186,19 +183,35 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
     // Send email if unsafe
     if (unsafe) {
       final prefs = await SharedPreferences.getInstance();
-      final userEmail = prefs.getString('loggedUserEmail') ?? "";
-      final account = await signInWithGoogle();
-      if (account != null) {
-        final tokens = await getGoogleTokens(account);
-        if (tokens != null) {
-          await sendMishapEmailWithGmailAPI(
-            tokens['accessToken']!,
-            tokens['email']!,
-            "doctor@example.com", // replace with actual doctor email
-            feedback,
-          );
+      String? accessToken = prefs.getString('accessToken');
+      String? googleEmail = prefs.getString('googleEmail');
+
+      // Prompt Google Sign-In if no token
+      if (accessToken == null || googleEmail == null) {
+        final account = await signInWithGoogle();
+        if (account != null) {
+          final tokens = await getGoogleTokens(account);
+          if (tokens != null) {
+            accessToken = tokens['accessToken'];
+            googleEmail = tokens['email'];
+            await prefs.setString('accessToken', accessToken ?? '');
+            await prefs.setString('googleEmail', googleEmail ?? '');
+
+          }
         }
       }
+
+      if (accessToken != null && googleEmail != null) {
+        await sendMishapEmailWithGmailAPI(
+          accessToken, // now guaranteed non-null
+          googleEmail,
+          "doctor@example.com",
+          feedback,
+        );
+      } else {
+        print("Cannot send email: Google sign-in required.");
+      }
+
     }
 
     // Save checkup to database

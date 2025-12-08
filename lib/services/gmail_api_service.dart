@@ -1,4 +1,3 @@
-// lib/services/gmail_api_service.dart
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -6,8 +5,9 @@ Future<void> sendMishapEmailWithGmailAPI(
     String accessToken,
     String fromEmail,
     String toEmail,
-    String report
+    String report,
     ) async {
+
   final String rawMessage = '''
 From: $fromEmail
 To: $toEmail
@@ -30,6 +30,6 @@ $report
   if (response.statusCode == 200) {
     print("Email sent successfully!");
   } else {
-    print("Failed to send email: ${response.body}");
+    print("Failed to send email: ${response.statusCode} ${response.body}");
   }
 }
