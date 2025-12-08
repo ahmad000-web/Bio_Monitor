@@ -38,7 +38,10 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Yoga Exercises"),
+        title: Text(
+          "Yoga Exercises",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.teal.shade900,
       ),
       body: ListView(

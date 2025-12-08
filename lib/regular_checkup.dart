@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'db/database_helper.dart';
+
 // Ideal ranges
 const double IDEAL_SYSTOLIC_MIN = 90;
 const double IDEAL_SYSTOLIC_MAX = 120;
@@ -26,10 +28,12 @@ String evaluateHealth({
   bool unsafe = false;
   String report = "";
   // Blood Pressure
-  if (systolic < IDEAL_SYSTOLIC_MIN - TOLERANCE || diastolic < IDEAL_DIASTOLIC_MIN - TOLERANCE) {
+  if (systolic < IDEAL_SYSTOLIC_MIN - TOLERANCE ||
+      diastolic < IDEAL_DIASTOLIC_MIN - TOLERANCE) {
     report += "• Blood Pressure is LOW.\n";
     unsafe = true;
-  } else if (systolic > IDEAL_SYSTOLIC_MAX + TOLERANCE || diastolic > IDEAL_DIASTOLIC_MAX + TOLERANCE) {
+  } else if (systolic > IDEAL_SYSTOLIC_MAX + TOLERANCE ||
+      diastolic > IDEAL_DIASTOLIC_MAX + TOLERANCE) {
     report += "• Blood Pressure is HIGH.\n";
     unsafe = true;
   } else {
@@ -72,7 +76,8 @@ String evaluateHealth({
   }
   // Final feedback
   if (unsafe) {
-    report += "\n⚠️ Your health is NOT ideal. Please monitor yourself or consult a doctor.";
+    report +=
+        "\n⚠️ Your health is NOT ideal. Please monitor yourself or consult a doctor.";
   } else {
     report += "\n✅ You are in safe and stable condition.";
   }
@@ -102,7 +107,10 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Regular Checkup"),
+        title: const Text(
+          "Regular Checkup",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.teal.shade900,
       ),
       body: SingleChildScrollView(
@@ -115,7 +123,6 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-
             _buildTextField(systolicController, "Systolic BP (mmHg)"),
             const SizedBox(height: 10),
             _buildTextField(diastolicController, "Diastolic BP (mmHg)"),
@@ -126,7 +133,6 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
             const SizedBox(height: 15),
             _buildTextField(sugarController, "Sugar Level (mg/dL)"),
             const SizedBox(height: 15),
-
             CheckboxListTile(
               title: const Text("Do you have Fever?"),
               value: hasFever,
@@ -148,9 +154,11 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
                 onPressed: _submitCheckup,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.teal.shade900,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 ),
-                child: const Text("Submit", style: TextStyle(fontSize: 18)),
+                child: const Text("Submit",
+                    style: TextStyle(fontSize: 18, color: Colors.white)),
               ),
             ),
           ],
@@ -199,7 +207,9 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("Checkup Result"),
+        title: const Text(
+          "Checkup Result",
+        ),
         content: Text(feedback),
         actions: [
           TextButton(
@@ -211,6 +221,5 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
         ],
       ),
     );
-
   }
 }

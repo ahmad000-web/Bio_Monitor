@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'db/database_helper.dart';
+
 class AppointmentScreen extends StatefulWidget {
   final Map<String, dynamic> userData;
 
@@ -23,10 +25,22 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
   // Doctor data: name -> {email, specialization}
   final Map<String, Map<String, String>> doctors = {
-    "Dr. Ali": {"email": "dr.ali@example.com", "specialization": "Cardiologist"},
-    "Dr. Sara": {"email": "dr.sara@example.com", "specialization": "General Physician"},
-    "Dr. Ahmed": {"email": "dr.ahmed@example.com", "specialization": "Endocrinologist"},
-    "Dr. Noor": {"email": "dr.noor@example.com", "specialization": "Pulmonologist"},
+    "Dr. Aitizaz  (Cardiologist)": {
+      "email": "aitizaz844@gmail.com",
+      "specialization": "Cardiologist"
+    },
+    "Dr. Ameesha Aman(General Physician)": {
+      "email": "abbasameesha@gmail.com",
+      "specialization": "General Physician"
+    },
+    "Dr. Ahmed (Endocrinologist)": {
+      "email": "eahmadbhatti7@gmail.com",
+      "specialization": "Endocrinologist"
+    },
+    "Dr. Noor (Pulmonologist)": {
+      "email": "eahmadbhatti7@gmail.com",
+      "specialization": "Pulmonologist"
+    },
   };
 
   @override
@@ -51,7 +65,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
               _buildTextField(nameController, "Full Name"),
               const SizedBox(height: 15),
-              _buildTextField(contactController, "Contact Number", keyboard: TextInputType.phone),
+              _buildTextField(contactController, "Contact Number",
+                  keyboard: TextInputType.phone),
               const SizedBox(height: 15),
               _buildTextField(notesController, "Reason / Notes", maxLines: 2),
               const SizedBox(height: 20),
@@ -65,7 +80,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               DropdownButtonFormField<String>(
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                 ),
                 value: selectedDoctor,
                 items: doctors.entries.map((entry) {
@@ -77,8 +93,12 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                        Text(specialization, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                        Text(name,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
+                        Text(specialization,
+                            style: const TextStyle(
+                                fontSize: 0.1, color: Colors.grey)),
                       ],
                     ),
                   );
@@ -101,7 +121,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                   ),
                   ElevatedButton(
                     onPressed: _pickDate,
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.teal.shade900),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal.shade900),
                     child: const Text("Select Date"),
                   ),
                 ],
@@ -118,7 +139,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                   ),
                   ElevatedButton(
                     onPressed: _pickTime,
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.teal.shade900),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.teal.shade900),
                     child: const Text("Select Time"),
                   ),
                 ],
@@ -131,9 +153,11 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                   onPressed: _submitAppointment,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.teal.shade900,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 15),
                   ),
-                  child: const Text("Book Appointment", style: TextStyle(fontSize: 18)),
+                  child: const Text("Book Appointment",
+                      style: TextStyle(fontSize: 18)),
                 ),
               ),
             ],
@@ -194,7 +218,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
     await DatabaseHelper().insertAppointment({
       "doctor": doctorName,
       "specialization": specialization,
-      "date": "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}",
+      "date":
+          "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}",
       "time": selectedTime!.format(context),
       "notes": notesController.text,
     });
@@ -206,12 +231,12 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         title: const Text("Appointment Booked"),
         content: Text(
           "Patient: ${nameController.text}\n"
-              "Doctor: $doctorName\n"
-              "Specialization: $specialization\n"
-              "Contact: ${contactController.text}\n"
-              "Date: ${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}\n"
-              "Time: ${selectedTime!.format(context)}\n"
-              "Notes: ${notesController.text}",
+          "Doctor: $doctorName\n"
+          "Specialization: $specialization\n"
+          "Contact: ${contactController.text}\n"
+          "Date: ${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}\n"
+          "Time: ${selectedTime!.format(context)}\n"
+          "Notes: ${notesController.text}",
         ),
         actions: [
           TextButton(
