@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "623510468664",
+    "project_id": "app-monitor-a1620",
+    "storage_bucket": "app-monitor-a1620.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623510468664:android:0c7c3edbd4d196c82d4ecd",
+        "android_client_info": {
+          "package_name": "com.example.bio_monitor_"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkdaKKMiHDZdm2AmN8Mz_xjNvZp4y-05I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
