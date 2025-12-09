@@ -165,7 +165,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   backgroundColor: Colors.teal.shade900,
                 ),
                 onPressed: _saveChanges,
-                child: Text("Save Changes"),
+                child: Text(
+                  "Save Changes",
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),

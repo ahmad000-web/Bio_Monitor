@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../services/google_sign_in_service.dart';
-import 'dashboard.dart';
 import '../user_database.dart';
+import 'dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -83,7 +84,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Login"), backgroundColor: Colors.teal),
+      appBar: AppBar(
+          title: const Text("Login"), backgroundColor: Colors.teal.shade900),
       body: Padding(
         padding: const EdgeInsets.all(26),
         child: Center(
@@ -98,7 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: "Email",
                     hintText: "user@gmail.com",
                     suffixIcon: const Icon(Icons.alternate_email),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -109,31 +112,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: "Password",
                     hintText: "******",
                     suffixIcon: IconButton(
-                      icon: Icon(_isHidden ? Icons.visibility_off : Icons.visibility),
+                      icon: Icon(
+                          _isHidden ? Icons.visibility_off : Icons.visibility),
                       onPressed: () => setState(() => _isHidden = !_isHidden),
                     ),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
                 const SizedBox(height: 20),
                 isLoading
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
-                  onPressed: loginUser,
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
-                  child: const Text("Login", style: TextStyle(color: Colors.white)),
-                ),
+                        onPressed: loginUser,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.teal),
+                        child: const Text("Login",
+                            style: TextStyle(color: Colors.white)),
+                      ),
                 const SizedBox(height: 20),
-                ElevatedButton.icon(
-                  icon: Image.asset("assets/images/google_logo.png", height: 24, width: 24),
-                  label: const Text("Sign in with Google"),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  onPressed: loginWithGoogle,
-                ),
               ],
             ),
           ),

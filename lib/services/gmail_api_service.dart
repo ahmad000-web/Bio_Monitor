@@ -1,37 +1,3 @@
-// import 'package:mailer/mailer.dart';
-// import 'package:mailer/smtp_server.dart';
-//
-// Future<void> sendAlertEmail(String report) async {
-//   String username = 'biomonitor7829@gmail.com'; // your personal Gmail
-//   String appPassword = 'xwqllznzyimucegm'; // 16-char app password
-//
-//   final smtpServer = gmail(username, appPassword);
-//
-//   final message = Message()
-//     ..from = Address(username, 'BioMonitor App')
-//     ..recipients.add('eahmadbhatti@gmail.com') // doctor email
-//     ..subject = '⚠️ Health Alert Detected'
-//     ..text =""
-//         //report;
-//     """
-// ⚠️ HEALTH ALERT
-//
-// Patient Name: $name
-// Phone Number: $phone
-//
-// ------------------------------------
-// HEALTH REPORT:
-// ------------------------------------
-// $report
-// """;
-//
-//   try {
-//     await send(message, smtpServer);
-//     print('Email sent successfully!');
-//   } catch (e) {
-//     print('Error sending email: $e');
-//   }
-// }
 import 'package:bio_monitor/user_database.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -53,7 +19,7 @@ Future<void> sendAlertEmail(String report, String userEmail) async {
   //  Create the email message
   final message = Message()
     ..from = Address('biomonitor7829@gmail.com', 'Health Monitor App')
-    ..recipients.add('aitizaz844@gmail.com') // Doctor's email
+    ..recipients.add('eahmadbhatti@gmail.com') // Doctor's email
     ..subject = '⚠️ Health Alert from Patient'
     ..text = """
 ⚠️ HEALTH ALERT

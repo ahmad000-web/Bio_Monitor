@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dashboard.dart';
+
 import '../user_database.dart';
+import 'dashboard.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -34,7 +35,12 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Sign Up"), backgroundColor: Colors.teal.shade900),
+      appBar: AppBar(
+          title: const Text(
+            "Sign Up",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.teal.shade900),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(26),
         child: Column(
@@ -44,7 +50,8 @@ class _SignupScreenState extends State<SignupScreen> {
               decoration: InputDecoration(
                 suffixIcon: const Icon(Icons.account_circle),
                 labelText: "Full Name",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
               ),
             ),
             const SizedBox(height: 15),
@@ -53,7 +60,8 @@ class _SignupScreenState extends State<SignupScreen> {
               decoration: InputDecoration(
                 suffixIcon: const Icon(Icons.alternate_email),
                 labelText: "Email",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
               ),
             ),
             const SizedBox(height: 15),
@@ -62,7 +70,8 @@ class _SignupScreenState extends State<SignupScreen> {
               decoration: InputDecoration(
                 suffixIcon: const Icon(Icons.phone),
                 labelText: "Phone",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
               ),
             ),
             const SizedBox(height: 15),
@@ -71,7 +80,8 @@ class _SignupScreenState extends State<SignupScreen> {
               decoration: InputDecoration(
                 suffixIcon: const Icon(Icons.calendar_month),
                 labelText: "Date of Birth",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
               ),
             ),
             const SizedBox(height: 15),
@@ -80,11 +90,13 @@ class _SignupScreenState extends State<SignupScreen> {
               obscureText: _isHidden,
               decoration: InputDecoration(
                 suffixIcon: IconButton(
-                  icon: Icon(_isHidden ? Icons.visibility_off : Icons.visibility),
+                  icon:
+                      Icon(_isHidden ? Icons.visibility_off : Icons.visibility),
                   onPressed: () => setState(() => _isHidden = !_isHidden),
                 ),
                 labelText: "Password",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
               ),
             ),
             const SizedBox(height: 15),
@@ -96,7 +108,8 @@ class _SignupScreenState extends State<SignupScreen> {
               onChanged: (v) => setState(() => gender = v!),
               decoration: InputDecoration(
                 labelText: "Gender",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
               ),
             ),
             const SizedBox(height: 15),
@@ -108,15 +121,19 @@ class _SignupScreenState extends State<SignupScreen> {
               onChanged: (v) => setState(() => blood = v!),
               decoration: InputDecoration(
                 labelText: "Blood Group",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(11)),
               ),
             ),
             const SizedBox(height: 25),
             ElevatedButton(
               onPressed: () async {
-                if (name.text.isEmpty || email.text.isEmpty || password.text.isEmpty) {
+                if (name.text.isEmpty ||
+                    email.text.isEmpty ||
+                    password.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Please fill all required fields")),
+                    const SnackBar(
+                        content: Text("Please fill all required fields")),
                   );
                   return;
                 }
@@ -138,12 +155,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   await prefs.setString('loggedUserEmail', email.text);
 
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Account Created Successfully!")),
+                    const SnackBar(
+                        content: Text("Account Created Successfully!")),
                   );
 
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (_) => DashboardPage(userData: userData)),
+                    MaterialPageRoute(
+                        builder: (_) => DashboardPage(userData: userData)),
                   );
                 } catch (_) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -151,8 +170,12 @@ class _SignupScreenState extends State<SignupScreen> {
                   );
                 }
               },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.teal.shade900),
-              child: const Text("Create Account"),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal.shade900),
+              child: const Text(
+                "Create Account",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),

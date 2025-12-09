@@ -75,8 +75,6 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
         children: [
           yogaVideo("Fast Morning Exercise for Full Body ", c7),
           yogaInfo("Improves balance, flexibility, and muscle strength."),
-          yogaInfo("Mindful Exercises for Movement to yoga for children."),
-          yogaVideo("7 brain Exercises", c5),
           yogaVideo("Basic Yoga Warmup", c2),
           yogaInfo("Helps improve flexibility and reduce morning stiffness."),
           yogaVideo("Full Body Stretch", c3),
@@ -90,6 +88,9 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
           yogaVideo("Breathing + Relaxation", c1),
           yogaInfo(
               "This exercise improves lung strength and mental relaxation."),
+          SizedBox(
+            height: 100,
+          )
         ],
       ),
     );
