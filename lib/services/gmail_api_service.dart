@@ -66,7 +66,7 @@ HEALTH REPORT:
 $report
 """;
 
-  // 4️⃣ Send the email
+  // Send the email
   try {
     final sendReport = await send(message, smtpServer);
     print('Email sent: ' + sendReport.toString());
