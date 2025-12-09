@@ -10,6 +10,14 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
   late YoutubePlayerController c1;
   late YoutubePlayerController c2;
   late YoutubePlayerController c3;
+  late YoutubePlayerController c4;
+  late YoutubePlayerController c5;
+  late YoutubePlayerController c6;
+  late YoutubePlayerController c7;
+  late YoutubePlayerController c8;
+  late YoutubePlayerController c9;
+
+
 
   @override
   void initState() {
@@ -17,19 +25,39 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
 
     c1 = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
-        "https://youtu.be/B4kNiCWTl7M?si=YTR6-vNylfleMlRq",
+        "https://youtu.be/brjAjq4zEIE?si=RuhilKX60CfyJynF",
       )!,
     );
 
     c2 = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
-        "https://youtu.be/NQzDFgnyYAo?si=P9BU_4gsGfm6gz7C",
+        "https://youtu.be/glONapH5flo?si=kLu9JqU5aWtODX4W",
       )!,
     );
 
     c3 = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
-        "https://youtu.be/2ymyRJwFtV8?si=7XDnvCqIKER5Gu-2",
+        "https://youtu.be/-TJcZRrOenA?si=cP4yGmwuajs38W0H",
+      )!,
+    );
+    c4 = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(
+        "https://youtu.be/T3fxXYmQSOI?si=ECBpJWoIk_tIUjK8",
+      )!,
+    );
+    c5 = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(
+        "https://youtu.be/9EPcRrcH_JQ?si=-aq97WuDxRWVfodu",
+      )!,
+    );
+    c6 = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(
+        "ttps://youtu.be/JmOBM160jZ0?si=s_pgZmi8IfgYWbRq",
+      )!,
+    );
+    c7 = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(
+        "https://youtu.be/JmOBM160jZ0?si=s_pgZmi8IfgYWbRq",
       )!,
     );
   }
@@ -53,6 +81,14 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
           yogaVideo("Basic Yoga Warmup", c2),
           yogaInfo("Helps improve flexibility and reduce morning stiffness."),
           yogaVideo("Full Body Stretch", c3),
+          yogaInfo("Improves balance, flexibility, and muscle strength."),
+          yogaVideo("Brain Activaion", c4),
+          yogaInfo("Mindful Exercises for Movement to yoga for children."),
+          yogaVideo("7 brain Exercises", c5),
+          yogaInfo("Brain Exercises that instantly Boost Power & focus."),
+          yogaVideo("21 Days challenge", c6),
+          yogaInfo("How to reprogram your Mind for suceess"),
+          yogaVideo("Fast Morning Exercise for Full Body ", c7),
           yogaInfo("Improves balance, flexibility, and muscle strength."),
         ],
       ),
