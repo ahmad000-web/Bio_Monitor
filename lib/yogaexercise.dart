@@ -17,8 +17,6 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
   late YoutubePlayerController c8;
   late YoutubePlayerController c9;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -52,12 +50,12 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
     );
     c6 = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
-        "ttps://youtu.be/JmOBM160jZ0?si=s_pgZmi8IfgYWbRq",
+        "https://youtu.be/JmOBM160jZ0?si=s_pgZmi8IfgYWbRq",
       )!,
     );
     c7 = YoutubePlayerController(
       initialVideoId: YoutubePlayer.convertUrlToId(
-        "https://youtu.be/JmOBM160jZ0?si=s_pgZmi8IfgYWbRq",
+        "https://youtu.be/9o0UPuDBM8M?si=qAxZU7AYGL65n5TS",
       )!,
     );
   }
@@ -75,9 +73,10 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
-          yogaVideo("Breathing + Relaxation", c1),
-          yogaInfo(
-              "This exercise improves lung strength and mental relaxation."),
+          yogaVideo("Fast Morning Exercise for Full Body ", c7),
+          yogaInfo("Improves balance, flexibility, and muscle strength."),
+          yogaInfo("Mindful Exercises for Movement to yoga for children."),
+          yogaVideo("7 brain Exercises", c5),
           yogaVideo("Basic Yoga Warmup", c2),
           yogaInfo("Helps improve flexibility and reduce morning stiffness."),
           yogaVideo("Full Body Stretch", c3),
@@ -88,8 +87,9 @@ class _YogaExercisePageState extends State<YogaExercisePage> {
           yogaInfo("Brain Exercises that instantly Boost Power & focus."),
           yogaVideo("21 Days challenge", c6),
           yogaInfo("How to reprogram your Mind for suceess"),
-          yogaVideo("Fast Morning Exercise for Full Body ", c7),
-          yogaInfo("Improves balance, flexibility, and muscle strength."),
+          yogaVideo("Breathing + Relaxation", c1),
+          yogaInfo(
+              "This exercise improves lung strength and mental relaxation."),
         ],
       ),
     );

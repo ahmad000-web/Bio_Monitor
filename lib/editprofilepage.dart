@@ -97,7 +97,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Profile"),
+        title: Text(
+          "Edit Profile",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.teal.shade900,
       ),
       body: Padding(

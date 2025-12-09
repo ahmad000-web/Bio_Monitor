@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../db/database_helper.dart';
-import '../services/google_sign_in_service.dart';
-import '../services/gmail_api_service.dart';
 
-// Ideal ranges
+import '../services/gmail_api_service.dart';
+import '../user_database.dart';
+
 const double IDEAL_SYSTOLIC_MIN = 90;
 const double IDEAL_SYSTOLIC_MAX = 120;
 const double IDEAL_DIASTOLIC_MIN = 60;
@@ -17,7 +15,11 @@ const double IDEAL_SUGAR_MIN = 70;
 const double IDEAL_SUGAR_MAX = 140;
 const double TOLERANCE = 5;
 
+// -----------------------------
+//   HEALTH EVALUATION FUNCTION
+// -----------------------------
 String evaluateHealth({
+  required String userName,
   required double systolic,
   required double diastolic,
   required double pulse,
@@ -78,16 +80,20 @@ String evaluateHealth({
   }
 
   if (unsafe) {
-    report += "\n⚠️ Your health is NOT ideal. Please monitor yourself or consult a doctor.";
+    report =
+        "$report\n⚠️ $userName's health is NOT ideal.Please take actions to normalize it.\n";
   } else {
-    report += "\n✅ You are in safe and stable condition.";
+    report =
+        "$report\n✅ $userName is in safe and stable condition.All parameters are normal.";
   }
 
   return report;
 }
 
 class RegularCheckupScreen extends StatefulWidget {
-  const RegularCheckupScreen({super.key});
+  final String userEmail;
+
+  const RegularCheckupScreen({super.key, required this.userEmail});
 
   @override
   State<RegularCheckupScreen> createState() => _RegularCheckupScreenState();
@@ -108,7 +114,10 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Regular Checkup"),
+        title: const Text(
+          "Regular Checkup",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.teal.shade900,
       ),
       body: SingleChildScrollView(
@@ -143,10 +152,15 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _submitCheckup,
-              child: const Text("Submit"),
+              child: const Text(
+                "Submit",
+                style: TextStyle(color: Colors.white),
+              ),
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.teal.shade900,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15)),
+                backgroundColor: Colors.teal.shade900,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              ),
             ),
           ],
         ),
@@ -155,11 +169,13 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
   }
 
   Widget _buildTextField(TextEditingController c, String label) => TextField(
-    controller: c,
-    keyboardType: TextInputType.number,
-    decoration: InputDecoration(labelText: label, border: const OutlineInputBorder()),
-  );
-
+        controller: c,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          labelText: label,
+          border: const OutlineInputBorder(),
+        ),
+      );
   Future<void> _submitCheckup() async {
     double systolic = double.tryParse(systolicController.text) ?? 0;
     double diastolic = double.tryParse(diastolicController.text) ?? 0;
@@ -167,7 +183,13 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
     double temp = double.tryParse(tempController.text) ?? 0;
     double sugar = double.tryParse(sugarController.text) ?? 0;
 
+    //  Fetch user info
+    final user = await UserDatabase.instance.getUserByEmail(widget.userEmail);
+    final userName = user?['name'] ?? "User";
+
+    // Evaluate health with userName
     String feedback = evaluateHealth(
+      userName: userName,
       systolic: systolic,
       diastolic: diastolic,
       pulse: pulse,
@@ -178,50 +200,24 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
       headache: hasHeadache,
     );
 
-    bool unsafe = feedback.contains("⚠️");
+    bool unsafe = feedback.contains("NOT ideal");
 
-    // Send email if unsafe
-    // Check if health is unsafe
+    // Send alert email if unsafe
     if (unsafe) {
-      // Force user to sign in with Google to get fresh token
-      final account = await signInWithGoogle();
-      if (account != null) {
-        final auth = await account.authentication; // fresh token
-        final accessToken = auth.accessToken;
-        final email = account.email;
-
-        if (accessToken != null) {
-          await sendMishapEmailWithGmailAPI(
-            accessToken,
-            email,
-            "doctor@example.com", // replace with doctor email
-            feedback,
-          );
-          print("Email sent successfully to doctor.");
-        } else {
-          print("Failed to get Google access token.");
-        }
-      } else {
-        print("User did not sign in with Google.");
-      }
+      await sendAlertEmail(feedback, widget.userEmail);
     }
 
-
-    // Save checkup to database
-    await DatabaseHelper().insertCheckup({
-      "date": DateTime.now().toString().split(" ")[0],
-      "time": TimeOfDay.now().format(context),
-      "result": feedback,
-    });
-
-    // Show feedback
+    // Show feedback dialog
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text("Checkup Result"),
         content: Text(feedback),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text("OK")),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text("OK"),
+          ),
         ],
       ),
     );

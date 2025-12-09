@@ -1,19 +1,20 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/google_sign_in_service.dart';
-import '../regular_checkup.dart';
+
+import '../appointment.dart';
 import '../articles/article_dengue.dart';
 import '../articles/article_fever.dart';
-import '../articles/article_hygiene.dart';
 import '../articles/article_hepatitis.dart';
+import '../articles/article_hygiene.dart';
 import '../articles/profile.dart';
 import '../bmi.dart';
 import '../getstarted.dart';
-import '../yogaexercise.dart';
-import '../appointment.dart';
 import '../history_checkup.dart';
+import '../regular_checkup.dart';
 import '../user_database.dart';
+import '../yogaexercise.dart';
 
 class DashboardPage extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -62,7 +63,7 @@ class _DashboardPageState extends State<DashboardPage> {
       });
     } else {
       final latestUser =
-      await UserDatabase.instance.getUserByEmail(userData['email']);
+          await UserDatabase.instance.getUserByEmail(userData['email']);
       if (latestUser != null) {
         setState(() {
           userData = latestUser;
@@ -112,7 +113,8 @@ class _DashboardPageState extends State<DashboardPage> {
                     radius: 30,
                     backgroundImage: userData['photoPath'] != null
                         ? FileImage(File(userData['photoPath']))
-                        : AssetImage("assets/images/img_7.png") as ImageProvider,
+                        : AssetImage("assets/images/img_7.png")
+                            as ImageProvider,
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -145,7 +147,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (_) => GetStarted()),
-                      (route) => false,
+                  (route) => false,
                 );
               },
             ),
@@ -155,33 +157,6 @@ class _DashboardPageState extends State<DashboardPage> {
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
-          ElevatedButton.icon(
-            icon: Icon(Icons.login),
-            label: Text("Sign in with Google"),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.teal.shade700,
-              minimumSize: Size(double.infinity, 50),
-            ),
-            onPressed: () async {
-              final account = await signInWithGoogle();
-              if (account != null) {
-                final tokens = await getGoogleTokens(account);
-                if (tokens != null) {
-                  final prefs = await SharedPreferences.getInstance();
-                  final accessToken = tokens['accessToken'] ?? '';
-                  final googleEmail = tokens['email'] ?? '';
-                  if (accessToken.isNotEmpty && googleEmail.isNotEmpty) {
-                    await prefs.setString('accessToken', accessToken);
-                    await prefs.setString('googleEmail', googleEmail);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Signed in as $googleEmail")),
-                    );
-                  }
-                }
-              }
-            },
-          ),
-          SizedBox(height: 20),
           Text(
             "Disease Awareness",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -238,8 +213,12 @@ class _DashboardPageState extends State<DashboardPage> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 15),
-          actionTile("Regular Check", page: const RegularCheckupScreen()),
-          actionTile("Book Appointment", page: AppointmentScreen(userData: userData)),
+          actionTile(
+            "Regular Check",
+            page: RegularCheckupScreen(userEmail: userData['email']),
+          ),
+          actionTile("Book Appointment",
+              page: AppointmentScreen(userData: userData)),
           actionTile("Check BMI", page: const BMI()),
           actionTile("History of Checkup", page: const HistoryPage()),
           actionTile("Yoga", page: YogaExercisePage()),

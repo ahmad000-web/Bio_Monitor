@@ -48,7 +48,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text("Book Appointment"),
+        title: const Text(
+          "Book Appointment",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.teal.shade900,
       ),
       body: SafeArea(
@@ -123,7 +126,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     onPressed: _pickDate,
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.teal.shade900),
-                    child: const Text("Select Date"),
+                    child: const Text(
+                      "Select Date",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -141,7 +147,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     onPressed: _pickTime,
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.teal.shade900),
-                    child: const Text("Select Time"),
+                    child: const Text(
+                      "Select Time",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -157,7 +166,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                         horizontal: 40, vertical: 15),
                   ),
                   child: const Text("Book Appointment",
-                      style: TextStyle(fontSize: 18)),
+                      style: TextStyle(fontSize: 18, color: Colors.white)),
                 ),
               ),
             ],
