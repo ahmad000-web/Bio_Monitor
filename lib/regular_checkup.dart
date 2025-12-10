@@ -85,18 +85,15 @@ String evaluateHealth({
 
   if (unsafe) {
     report =
-        "$userName's health is NOT ideal.\n$report\n⚠️ Please take actions to normalize it.";
+        "$report\n⚠️$userName's health is NOT ideal.Please take actions to normalize it.";
   } else {
     report =
-        "$userName is in safe and stable condition.\n$report\n✅ All parameters are normal.";
+        "$report\n✅ $userName is in safe and stable condition.All parameters are normal.";
   }
 
   return report;
 }
 
-// -----------------------------
-//      MAIN SCREEN WIDGET
-// -----------------------------
 class RegularCheckupScreen extends StatefulWidget {
   final String userEmail;
 
@@ -184,9 +181,6 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
         ),
       );
 
-  // -----------------------------
-  //        SUBMIT CHECKUP
-  // -----------------------------
   Future<void> _submitCheckup() async {
     double systolic = double.tryParse(systolicController.text) ?? 0;
     double diastolic = double.tryParse(diastolicController.text) ?? 0;
@@ -194,12 +188,12 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
     double temp = double.tryParse(tempController.text) ?? 0;
     double sugar = double.tryParse(sugarController.text) ?? 0;
 
-    // 1️⃣ Fetch user info
+    //Fetch user info
     final user = await UserDatabase.instance.getUserByEmail(widget.userEmail);
     final userName = user?['name'] ?? "User";
     final userPhone = user?['phone'] ?? "N/A";
 
-    // 2️⃣ Evaluate health with userName
+    // Evaluate health with userName
     String feedback = evaluateHealth(
       userName: userName,
       systolic: systolic,
@@ -214,7 +208,7 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
 
     bool unsafe = feedback.contains("NOT ideal");
 
-    // 3️⃣ Send alert email if unsafe
+    // Send alert email if unsafe
     if (unsafe) {
       await sendAlertEmail(
         "Patient Name: $userName\nPhone: $userPhone\n\n$feedback",
@@ -222,14 +216,14 @@ class _RegularCheckupScreenState extends State<RegularCheckupScreen> {
       );
     }
 
-    // 4️⃣ Save checkup to database
+    //Save checkup to database
     await DatabaseHelper().insertCheckup({
       "date": DateTime.now().toString().split(" ")[0],
       "time": TimeOfDay.now().format(context),
       "result": feedback,
     });
 
-    // 5️⃣ Show feedback dialog
+    // Show feedback dialog
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(

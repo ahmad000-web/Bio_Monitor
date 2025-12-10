@@ -18,14 +18,12 @@ Future<void> sendAlertEmail(String report, String userEmail) async {
 
   //  Create the email message
   final message = Message()
-    ..from = Address('biomonitor7829@gmail.com', 'Health Monitor App')
-    ..recipients.add('eahmadbhatti@gmail.com') // Doctor's email
+    ..from = Address('biomonitor7829@gmail.com', 'Bio Monitor App')
+    ..recipients.add('eahmadbhatti7@gmail.com') // Doctor's email
     ..subject = '⚠️ Health Alert from Patient'
     ..text = """
 ⚠️ HEALTH ALERT
 
-Patient Name: $name
-Phone Number: $phone
 ------------------------------------
 HEALTH REPORT:
 ------------------------------------
